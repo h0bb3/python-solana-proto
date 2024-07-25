@@ -13,10 +13,7 @@ from solders.sysvar import RENT as SYSVAR_RENT_PUBKEY
 from solders.system_program import ID as SYS_PROGRAM_ID
 import struct
 import util
-# from token_metadata.instructions.create import create as _create_metadata_instruction, CreateAccounts, CreateArgs
-# from token_metadata.types.create_args import V1 as CreateV1, V1Value as CreateV1Value
-# from token_metadata.types.asset_data import AssetData
-# from token_metadata.types.token_standard import Fungible
+
 
 
 from borsh_construct import CStruct, String, U8, U16, U64, Vec, Option, Bool, Enum
@@ -25,8 +22,8 @@ from construct import Bytes
 # structure of the instruction
 instruction_structure = CStruct(
     "instructionDiscriminator" / U8,
-    "createMetadataAccountArgsV3" / CStruct(
-        "data" / CStruct(
+    "createMetadataAccountArgsV3" / CStruct( # https://github.com/metaplex-foundation/mpl-token-metadata/blob/5c7672c7b7cd671c7afbdaeed52819e9a7a3259f/programs/token-metadata/program/src/instruction/metadata.rs#L32
+        "data" / CStruct(                       # https://github.com/metaplex-foundation/mpl-token-metadata/blob/5c7672c7b7cd671c7afbdaeed52819e9a7a3259f/programs/token-metadata/program/src/state/data.rs#L22
             "name" / String,
             "symbol" / String,
             "uri" / String,
