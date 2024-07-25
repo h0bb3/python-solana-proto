@@ -6,9 +6,7 @@ from solana.rpc.async_api import AsyncClient
 from solana.constants import LAMPORTS_PER_SOL
 import util
 
-# second account
-# 9kZPzNag4fdXyKiYUTCVTZrXUZBfJCDxLhptNjmbcmD6
-# 3qh3NEW95zPvkW8XsaUdFcoRuUYaDWWnURqJnEsRPU69caDTZXQuiPc5ArdRxMGHvRGxc1musCYjhmfxb7Cq42Te
+
 
 
 #keypair = Keypair()
