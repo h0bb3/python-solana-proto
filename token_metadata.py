@@ -55,10 +55,10 @@ instruction_structure = CStruct(
 
 # data for the instruction
 instruction_data = {
-    "instructionDiscriminator": 33,
+    "instructionDiscriminator": 33, # createMetadataAccountV3 count to that enum in https://github.com/metaplex-foundation/mpl-token-metadata/blob/5c7672c7b7cd671c7afbdaeed52819e9a7a3259f/programs/token-metadata/program/src/instruction/mod.rs#L49
     "createMetadataAccountArgsV3": {
         "data": {
-            "name": "h0bb3Z Test Token",
+            "name": "h0bb3Z Tezt Token",
             "symbol": "h0b",
             "uri": "https://google.com",
             "sellerFeeBasisPoints": 0,

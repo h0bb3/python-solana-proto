@@ -20,6 +20,12 @@ async def airdrop_if_required(connection: AsyncClient, address: Pubkey):
         print(f'Airdrop transaction signature: {resp}')
 
 
+def mainnet_rpc():
+    return os.getenv('MAINNET_RPC', 'https://api.mainnet-beta.solana.com')
+
+def devnet_rpc():
+    return os.getenv('DEVNET_RPC', 'https://api.devnet.solana.com')
+
 def keypair_from_env(key='SECRET'):
     secret = os.getenv(key)
     return Keypair.from_base58_string(secret)
