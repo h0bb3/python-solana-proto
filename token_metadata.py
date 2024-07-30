@@ -58,9 +58,9 @@ instruction_data = {
     "instructionDiscriminator": 33, # createMetadataAccountV3 count to that enum in https://github.com/metaplex-foundation/mpl-token-metadata/blob/5c7672c7b7cd671c7afbdaeed52819e9a7a3259f/programs/token-metadata/program/src/instruction/mod.rs#L49
     "createMetadataAccountArgsV3": {
         "data": {
-            "name": "h0bb3Z Tezt Token",
-            "symbol": "h0b",
-            "uri": "https://google.com",
+            "name": "Srcful Dev Beta",
+            "symbol": "SRC",
+            "uri": "https://raw.githubusercontent.com/srcfl/srcful-token22/main/metadata.json",
             "sellerFeeBasisPoints": 0,
             "creators": None,
             "collection": None,
@@ -102,10 +102,6 @@ async def create_metadata(client: AsyncClient, mint_pubkey: Pubkey, payer: Keypa
         update_authority
     )
 
-    
-
-
-
     # account list for instruction
     accounts = [
         AccountMeta(pubkey=metadata_pubkey, is_signer=False, is_writable=True), # metadata
@@ -131,10 +127,10 @@ async def create_metadata(client: AsyncClient, mint_pubkey: Pubkey, payer: Keypa
 
 async def main():
     payer = util.keypair_from_env()
-    async with AsyncClient(ENDPOINT.https.devnet) as client:
+    async with AsyncClient(util.devnet_rpc()) as client:
         await client.is_connected()
 
-        mint_pubkey = util.pubkey_from_env('TOKEN_PUB')
+        mint_pubkey = util.pubkey_from_env('SRC_DEV_TOKEN_PUB')
 
         name = "h0bb3Z"
         symbol = "h0b"

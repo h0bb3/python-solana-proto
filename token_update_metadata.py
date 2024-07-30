@@ -59,8 +59,8 @@ instruction_data = {
     "instructionDiscriminator": 15, # UpdateMetadataAccountV2 count to that enum in https://github.com/metaplex-foundation/mpl-token-metadata/blob/5c7672c7b7cd671c7afbdaeed52819e9a7a3259f/programs/token-metadata/program/src/instruction/mod.rs#L49
     "updateMetadataAccountArgsV2": {
         "data": {
-            "name": "h0bb3Z Tezt Token",
-            "symbol": "h0b",
+            "name": "The Best Token",
+            "symbol": "TBT",
             "uri": "https://google.com",
             "sellerFeeBasisPoints": 0,
             "creators": None,
@@ -109,8 +109,8 @@ async def update_metadata(client: AsyncClient, mint_pubkey: Pubkey, payer: Keypa
 
 async def main():
     payer = util.keypair_from_env()
-    async with AsyncClient(ENDPOINT.https.devnet) as client:
-        await client.is_connected()
+    async with AsyncClient(util.devnet_rpc()) as client:
+        #await client.is_connected()
 
         mint_pubkey = util.pubkey_from_env('TOKEN_PUB')
 

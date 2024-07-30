@@ -2,6 +2,7 @@
 import asyncio
 
 import util
+import token_util
 
 from spl.token.async_client import AsyncToken
 from spl.token.constants import TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID
@@ -11,12 +12,10 @@ from solana.rpc.async_api import AsyncClient
 from solana.utils.cluster import ENDPOINT
 from solana.rpc import commitment
 
-
-
 from solders.pubkey import Pubkey
 from solders.keypair import Keypair
 #from solders.token.associated import get_associated_token_address
-from solders.token.state import TokenAccount
+
 
 from struct import unpack
 from base58 import b58decode
@@ -103,25 +102,6 @@ async def get_token_name_symbol(client: AsyncClient, token: Pubkey):
 
     return "unknown token", 'n/a'
 
-
-def get_associated_token_address(account: Pubkey, token: Pubkey, owner:Pubkey) -> Pubkey:
-    return Pubkey.find_program_address([bytes(account), bytes(owner), bytes(token)], ASSOCIATED_TOKEN_PROGRAM_ID)
-
-
-async def get_associated_token_account(client: AsyncClient, account: Pubkey, token: Pubkey) -> TokenAccount:
-
-    mint_account = await client.get_account_info(token, commitment.Finalized)
-    assert mint_account.value.owner in {TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID}   
-    
-    associated_address, _ = get_associated_token_address(account, token, mint_account.value.owner)
-
-    associated_account = await client.get_account_info(associated_address, commitment.Finalized)
-    print("associated account address", associated_address)
-
-    if associated_account.value is not None:
-        return TokenAccount.from_bytes(associated_account.value.data[0:165])  # token 22 accounts are the same as the normal accounts up to 165 bytes
-    raise ValueError(f'Associated token account not found for account: {account} and token: {token}')
-
 async def main():
     async with AsyncClient(util.devnet_rpc()) as client:
         #await client.is_connected()
@@ -133,7 +113,7 @@ async def main():
         name, symbol = await get_token_name_symbol(client, token_pubkey)
 
         try:
-            account = await get_associated_token_account(client, holder_pubkey, token_pubkey)
+            account = await token_util.get_associated_token_account(client, holder_pubkey, token_pubkey)
             print(f'💰 The {name} balance of account {holder_pubkey} is {account.amount} {symbol}')
         except ValueError:
 
